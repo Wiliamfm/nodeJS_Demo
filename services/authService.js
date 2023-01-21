@@ -8,6 +8,15 @@ class AuthService {
     }
     return user;
   }
+
+  register(user) {
+    const newUser = userService.create(user);
+    if (!newUser) {
+      return false;
+    }
+    delete newUser.password;
+    return newUser;
+  }
 }
 
 const authService = new AuthService();

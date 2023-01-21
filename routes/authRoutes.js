@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authService } from "../services/authService.js";
 import { responseMiddleware } from "../middlewares/response.middleware.js";
+import { createUserValid } from "../middlewares/user.validation.middleware.js";
 
 const router = Router();
 
@@ -18,5 +19,15 @@ router.post(
   },
   responseMiddleware
 );
+
+router.post("/register", createUserValid, (req, res, next) => {
+  try {
+    return res.send(authService.register(req.body));
+  } catch (err) {
+    console.log(err);
+  } finally {
+    next();
+  }
+});
 
 export { router };
