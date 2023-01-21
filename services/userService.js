@@ -41,6 +41,11 @@ class UserService {
     }
     return item;
   }
+
+  getAll() {
+    return userRepository.getAll();
+  }
+
 }
 
 export default new UserService();
