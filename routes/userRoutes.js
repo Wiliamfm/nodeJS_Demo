@@ -5,6 +5,7 @@ import {
   updateUserValid,
 } from "../middlewares/user.validation.middleware.js";
 import { responseMiddleware } from "../middlewares/response.middleware.js";
+import isAuthenticated from "../middlewares/auth.validation.middleware.js";
 
 const router = Router();
 
@@ -22,8 +23,14 @@ router.get("/:id", (req, res) => {
   return res.send(user);
 });
 
-router.post("/", (req, res) => {
-
+router.post("/", isAuthenticated, createUserValid, (req, res) => {
+  try {
+    return res.send(userService.create(req.body));
+  } catch (err) {
+    console.log(`ERROR IN POST api/users/
+    ${String(err)}}`)
+    return res.status(400).send(String(err));
+  }
 });
 
 router.put("/:id");

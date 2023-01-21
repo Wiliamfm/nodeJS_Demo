@@ -17,7 +17,7 @@ class UserService {
     return pwd.length >= 3 ? true : false;
   }
 
-  isValidateUser(user) {
+  isValidUser(user) {
     if (this.isValidateEmail(user.email) && this.isValidatePN(user.phoneNumber) && this.isValidatePassword(user.password)) {
       if (userRepository.getByEmail(user.email) || userRepository.getByPhoneNumber(user.phoneNumber)) {
         return false;
