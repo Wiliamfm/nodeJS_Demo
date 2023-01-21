@@ -13,9 +13,18 @@ router.get("/", (req, res) => {
   return res.status(200).send(userService.getAll());
 });
 
-router.get("/:id");
+router.get("/:id", (req, res) => {
+  const user = userService.getById(req.params.id);
+  if (!user) {
+    return res.status(404).send("user not found");
+  }
+  delete user.password;
+  return res.send(user);
+});
 
-router.post("");
+router.post("/", (req, res) => {
+
+});
 
 router.put("/:id");
 

@@ -46,6 +46,11 @@ class UserService {
     return userRepository.getAll();
   }
 
+  getById(id) {
+    const user = userRepository.getOne({ id: id });
+    return user ? user : false;
+  }
+
 }
 
 export default new UserService();
