@@ -12,10 +12,13 @@ router.post("/login", (req, res, next) => {
     if (!user) {
       return res.status(404).send("Incorrect password");
     }
-    req.session.regenerate(function () {
+    req.session.regenerate(() => {
       req.session.user = user.id;
+      req.session.save(err => {
+        if (err) return next(err);
+      })
+      return res.send(user);
     });
-    return res.send(user);
   } catch (err) {
     res.status(400).send(String(err));
   } finally {
