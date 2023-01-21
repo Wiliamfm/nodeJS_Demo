@@ -7,4 +7,4 @@ const USER = {
   password: "", // min 3 symbols
 };
 
-export { USER };
+export { USER }

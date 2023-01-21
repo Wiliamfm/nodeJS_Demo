@@ -20,7 +20,7 @@ class UserService {
   isValidUser(user) {
     if (this.isValidateEmail(user.email) && this.isValidatePN(user.phoneNumber) && this.isValidatePassword(user.password)) {
       if (userRepository.getByEmail(user.email) || userRepository.getByPhoneNumber(user.phoneNumber)) {
-        return false;
+        //return false;
       }
       return true;
     }
@@ -29,9 +29,12 @@ class UserService {
 
   create(user) {
     if (this.search(user)) {
-      return false;
+      //Is necesary validate the email and phone number already exists?
+      throw Error(`User ${user.name} already exists!`)
     }
     return userRepository.create(user);
+    resUSER = userRepository.create(user);
+    return resUSER;
   }
 
   search(search) {
@@ -43,12 +46,24 @@ class UserService {
   }
 
   getAll() {
-    return userRepository.getAll();
+    return userRepository.getAll().map(u => {
+      let user = this.setResUser(u);
+      return user;
+    })
   }
 
   getById(id) {
-    const user = userRepository.getOne({ id: id });
+    const user = this.setResUser(userRepository.getOne({ id: id }));
     return user ? user : false;
+  }
+
+  setResUser(user) {
+    if (!user) {
+      return false;
+    }
+    let resUser = { ...user };
+    delete resUser.password;
+    return resUser;
   }
 
 }

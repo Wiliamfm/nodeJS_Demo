@@ -19,7 +19,6 @@ router.get("/:id", (req, res) => {
   if (!user) {
     return res.status(404).send("user not found");
   }
-  delete user.password;
   return res.send(user);
 });
 

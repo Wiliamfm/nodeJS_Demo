@@ -32,7 +32,8 @@ router.post("/register", createUserValid, (req, res, next) => {
   try {
     return res.send(authService.register(req.body));
   } catch (err) {
-    console.log(err);
+    console.log(`ERROR in POST api/auth/register \n${err}`);
+    return res.status(400).send(String(err));
   } finally {
     next();
   }

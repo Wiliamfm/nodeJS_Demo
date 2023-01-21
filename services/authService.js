@@ -15,11 +15,15 @@ class AuthService {
   }
 
   register(user) {
+    try {
+      return userService.create(user);
+    } catch (error) {
+      throw Error(error);
+    }
     const newUser = userService.create(user);
     if (!newUser) {
       return false;
     }
-    delete newUser.password;
     return newUser;
   }
 }
