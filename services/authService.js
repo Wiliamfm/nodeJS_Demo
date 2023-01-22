@@ -11,7 +11,7 @@ class AuthService {
     if (user.email !== username || user.password !== password) {
       throw new setError(400, "Credentials are not valid!");
     }
-    return user;
+    return userService.setResUser(user);
   }
 
   register(user) {
