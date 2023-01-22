@@ -3,22 +3,22 @@ import { userRepository } from "../repositories/userRepository.js";
 class UserService {
   // TODO: Implement methods to work with user
 
-  isValidateEmail(email) {
+  isValidEmail(email) {
     const emailRegex = /\w+@gmail.\w{1,3}/;
     return emailRegex.test(email);
   }
 
-  isValidatePN(phoneNumber) {
+  isValidPN(phoneNumber) {
     const phoneRegex = /\+380\d{9}/
     return phoneRegex.test(phoneNumber);
   }
 
-  isValidatePassword(pwd) {
+  isValidPassword(pwd) {
     return pwd.length >= 3 ? true : false;
   }
 
   isValidUser(user) {
-    if (this.isValidateEmail(user.email) && this.isValidatePN(user.phoneNumber) && this.isValidatePassword(user.password)) {
+    if (this.isValidEmail(user.email) && this.isValidPN(user.phoneNumber) && this.isValidPassword(user.password)) {
       if (userRepository.getByEmail(user.email) || userRepository.getByPhoneNumber(user.phoneNumber)) {
         return false;
       }
