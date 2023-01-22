@@ -41,7 +41,7 @@ class UserService {
     if (!item) {
       return null;
     }
-    return this.setResUser(item);
+    return item;
   }
 
   getAll() {
