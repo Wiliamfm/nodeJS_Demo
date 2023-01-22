@@ -15,15 +15,16 @@ const createUserValid = (req, res, next) => {
 
 const updateUserValid = (req, res, next) => {
   let user = userService.getById(req.params.id);
+  //is this validation necessary? cause the update method on repository already search by id
   if (!user) {
     return res.status(404).send("User not found");
   }
   req.found = user;
   let userToUpdate = req.body;
-  if (!userService.isValidEmail(userToUpdate.email) && userToUpdate.email) {
+  if (userToUpdate.email && (!userService.isValidEmail(userToUpdate.email) || userService.getByEmail(userToUpdate.email))) {
     return res.status(400).send("User email not valid");
   }
-  if (!userService.isValidPN(userToUpdate.phoneNumber) && userToUpdate.phoneNumber) {
+  if (userToUpdate.phoneNumber && (!userService.isValidPN(userToUpdate.phoneNumber) || userService.getByPhoneNumber(userToUpdate.phoneNumber))) {
     return res.status(400).send("User phone number not valid");
   }
   let extraFields = getExtraFields(Object.keys(userToUpdate));

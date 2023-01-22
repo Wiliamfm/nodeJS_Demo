@@ -33,7 +33,7 @@ router.post("/", isAuthenticated, createUserValid, (req, res) => {
 
 router.put("/:id", isAuthenticated, updateUserValid, (req, res) => {
   try {
-    res.send(req.found);
+    res.send(userService.update(req.params.id, req.body));
   } catch (error) {
     console.log(`ERROR in PUT api/users/:id \n${err}`)
     return res.status(400).send(err);

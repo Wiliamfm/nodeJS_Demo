@@ -15,18 +15,22 @@ class UserService {
 
   isValidEmail(email) {
     const emailRegex = /\w+@gmail.\w{1,3}/;
+    /*
     if (userRepository.getByEmail(email)) {
       return false;
     }
+    */
     return this.validateField(emailRegex, email);
     //return emailRegex.test(email);
   }
 
   isValidPN(phoneNumber) {
     const phoneRegex = /\+380\d{9}/
+    /*
     if (userRepository.getByPhoneNumber(phoneNumber)) {
       return false;
     }
+    */
     return this.validateField(phoneRegex, phoneNumber);
     //return phoneRegex.test(phoneNumber);
   }
@@ -52,8 +56,8 @@ class UserService {
     return this.setResUser(userRepository.create(user));
   }
 
-  update(id) {
-
+  update(id, toUpdate) {
+    return this.setResUser(userRepository.update(id, toUpdate));
   }
 
   search(search) {
@@ -73,6 +77,16 @@ class UserService {
 
   getById(id) {
     const user = this.setResUser(userRepository.getOne({ id: id }));
+    return user ? user : false;
+  }
+
+  getByEmail(email) {
+    const user = this.setResUser(userRepository.getByEmail(email));
+    return user ? user : false;
+  }
+
+  getByPhoneNumber(phoneNumber) {
+    const user = this.setResUser(userRepository.getByPhoneNumber(phoneNumber));
     return user ? user : false;
   }
 
