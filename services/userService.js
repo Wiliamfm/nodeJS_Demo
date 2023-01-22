@@ -34,8 +34,6 @@ class UserService {
       throw Error(`User ${user.name} already exists!`)
     }
     return userRepository.create(user);
-    resUSER = userRepository.create(user);
-    return resUSER;
   }
 
   search(search) {
@@ -43,7 +41,7 @@ class UserService {
     if (!item) {
       return null;
     }
-    return item;
+    return this.setResUser(item);
   }
 
   getAll() {

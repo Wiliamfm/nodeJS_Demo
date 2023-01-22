@@ -7,11 +7,12 @@ const router = Router();
 
 router.post("/login", (req, res, next) => {
   try {
-    // TODO: Implement login action (get the user if it exist with entered credentials)
     let user = authService.login(req.body.username, req.body.password);
+    /*
     if (!user) {
       return res.status(404).send("Incorrect password");
     }
+    */
     req.session.regenerate(() => {
       req.session.user = user.id;
       req.session.save(err => {
@@ -20,7 +21,8 @@ router.post("/login", (req, res, next) => {
       return res.send(user);
     });
   } catch (err) {
-    res.status(400).send(String(err));
+    console.log(`ERROR in POST api/auth/login \n${err}`);
+    return res.status(err.status).send(err.msg);
   } finally {
     next();
   }

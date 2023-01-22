@@ -1,16 +1,16 @@
 import { userService } from "./userService.js";
+import { setError } from "../errors/baseError.js";
 
 class AuthService {
+
   login(username, password) {
     const user = userService.search({ email: username });
     if (!user) {
-      throw Error("User not found");
+      throw new setError(404, "User not found!")
     }
     if (user.email !== username || user.password !== password) {
-      return false;
-      throw Error("Credentials are not valid");
+      throw new setError(400, "Credentials are not valid!");
     }
-    delete user.password;
     return user;
   }
 
@@ -20,11 +20,6 @@ class AuthService {
     } catch (error) {
       throw Error(error);
     }
-    const newUser = userService.create(user);
-    if (!newUser) {
-      return false;
-    }
-    return newUser;
   }
 }
 
