@@ -40,6 +40,17 @@ router.put("/:id", isAuthenticated, updateUserValid, (req, res) => {
   }
 });
 
-router.delete("/:id");
+router.delete("/:id", (req, res) => {
+  try {
+    const user = userService.delete(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    return res.send(user);
+  } catch (error) {
+    console.log(`ERROR in DELETE api/users/:id \n${err}`)
+    return res.status(400).send(err);
+  }
+});
 
 export { router };

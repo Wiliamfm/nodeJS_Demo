@@ -1,4 +1,5 @@
 import { userRepository } from "../repositories/userRepository.js";
+import { setError } from "../errors/baseError.js";
 
 class UserService {
 
@@ -88,6 +89,11 @@ class UserService {
   getByPhoneNumber(phoneNumber) {
     const user = this.setResUser(userRepository.getByPhoneNumber(phoneNumber));
     return user ? user : false;
+  }
+
+  delete(id) {
+    const a = userRepository.delete(id);
+    return a.length === 0 ? false : a;
   }
 
   setResUser(user) {
