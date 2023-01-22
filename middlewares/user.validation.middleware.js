@@ -39,7 +39,7 @@ export { createUserValid, updateUserValid };
 function getExtraFields(reqData, userKeys = Object.keys(USER)) {
   let extraFields = [];
   reqData.forEach(k => {
-    if (!userKeys.includes(k) && k !== "id") {
+    if (!userKeys.includes(k) || k === "id") {
       extraFields.push(k);
     }
   });
