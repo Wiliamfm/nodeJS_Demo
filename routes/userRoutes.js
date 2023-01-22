@@ -26,12 +26,19 @@ router.post("/", isAuthenticated, createUserValid, (req, res) => {
   try {
     return res.send(userService.create(req.body));
   } catch (err) {
-    console.log(`ERROR in POST api/users/ \n${err}}`)
+    console.log(`ERROR in POST api/users/ \n${err}`)
     return res.status(400).send(err);
   }
 });
 
-router.put("/:id");
+router.put("/:id", (req, res) => {
+  try {
+
+  } catch (error) {
+    console.log(`ERROR in PUT api/users/:id \n${err}`)
+    return res.status(400).send(err);
+  }
+});
 
 router.delete("/:id");
 
