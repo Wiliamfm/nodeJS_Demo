@@ -21,6 +21,7 @@ class AuthService {
       throw Error(error);
     }
   }
+
 }
 
 const authService = new AuthService();

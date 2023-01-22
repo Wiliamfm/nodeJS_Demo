@@ -26,9 +26,8 @@ router.post("/", isAuthenticated, createUserValid, (req, res) => {
   try {
     return res.send(userService.create(req.body));
   } catch (err) {
-    console.log(`ERROR IN POST api/users/
-    ${String(err)}}`)
-    return res.status(400).send(String(err));
+    console.log(`ERROR in POST api/users/ \n${err}}`)
+    return res.status(400).send(err);
   }
 });
 

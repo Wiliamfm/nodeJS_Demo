@@ -33,7 +33,7 @@ class UserService {
     if (this.search(user)) {
       throw Error(`User ${user.name} already exists!`)
     }
-    return userRepository.create(user);
+    return this.setResUser(userRepository.create(user));
   }
 
   search(search) {
