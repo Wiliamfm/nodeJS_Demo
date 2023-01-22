@@ -1,16 +1,34 @@
 import { userRepository } from "../repositories/userRepository.js";
 
 class UserService {
-  // TODO: Implement methods to work with user
+
+  validateField(regex, fieldValue) {
+    let match = fieldValue.match(regex);
+    if (!match) {
+      return false;
+    }
+    if (!(match[0] === fieldValue && match[0].length === fieldValue.length)) {
+      return false;
+    }
+    return true;
+  }
 
   isValidEmail(email) {
     const emailRegex = /\w+@gmail.\w{1,3}/;
-    return emailRegex.test(email);
+    if (userRepository.getByEmail(email)) {
+      return false;
+    }
+    return this.validateField(emailRegex, email);
+    //return emailRegex.test(email);
   }
 
   isValidPN(phoneNumber) {
     const phoneRegex = /\+380\d{9}/
-    return phoneRegex.test(phoneNumber);
+    if (userRepository.getByPhoneNumber(phoneNumber)) {
+      return false;
+    }
+    return this.validateField(phoneRegex, phoneNumber);
+    //return phoneRegex.test(phoneNumber);
   }
 
   isValidPassword(pwd) {
@@ -32,6 +50,10 @@ class UserService {
       throw Error(`User ${user.name} already exists!`)
     }
     return this.setResUser(userRepository.create(user));
+  }
+
+  update(id) {
+
   }
 
   search(search) {
