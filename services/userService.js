@@ -19,9 +19,11 @@ class UserService {
 
   isValidUser(user) {
     if (this.isValidateEmail(user.email) && this.isValidatePN(user.phoneNumber) && this.isValidatePassword(user.password)) {
+      /*
       if (userRepository.getByEmail(user.email) || userRepository.getByPhoneNumber(user.phoneNumber)) {
-        //return false;
+        return false;
       }
+      */
       return true;
     }
     return false;
@@ -29,7 +31,6 @@ class UserService {
 
   create(user) {
     if (this.search(user)) {
-      //Is necesary validate the email and phone number already exists?
       throw Error(`User ${user.name} already exists!`)
     }
     return userRepository.create(user);
