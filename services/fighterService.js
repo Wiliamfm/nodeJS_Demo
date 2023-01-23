@@ -1,4 +1,5 @@
 import { fighterRepository } from "../repositories/fighterRepository.js";
+import { setError } from "../errors/baseError.js";
 
 class FighterService {
 
@@ -7,7 +8,11 @@ class FighterService {
   }
 
   getById(id) {
-
+    let f = fighterRepository.getOne({ id: id });
+    if (!f || f === undefined) {
+      throw new setError(404, "Fighter not found");
+    }
+    return f;
   }
 
   create(fighter) {

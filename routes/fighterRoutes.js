@@ -26,7 +26,22 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/:id");
+router.get("/:id", (req, res) => {
+  try {
+    const fighter = fighterService.getById(req.params.id);
+    res.data = {
+      data: fighter,
+      status: 200
+    };
+  } catch (error) {
+    res.data = {
+      data: error.msg,
+      status: error.status
+    }
+  } finally {
+    responseMiddleware(req, res);
+  }
+});
 
 router.post("/", isAuthenticated, createFighterValid, (req, res) => {
   try {
