@@ -53,6 +53,11 @@ class FighterService {
     return (health >= 80 && health <= 120) ? true : false;
   }
 
+  delete(id) {
+    let a = fighterRepository.delete(id);
+    return a.length === 0 ? false : a;
+  }
+
 }
 
 const fighterService = new FighterService();

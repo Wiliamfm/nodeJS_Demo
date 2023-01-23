@@ -62,6 +62,20 @@ router.post("/", isAuthenticated, createFighterValid, (req, res) => {
 
 router.put("/:id");
 
-router.delete("/:id");
+router.delete("/:id", isAuthenticated, (req, res) => {
+  try {
+    res.data = {
+      data: fighterService.delete(req.params.id),
+      status: 200
+    }
+  } catch (error) {
+    res.data = {
+      data: error.msg,
+      status: error.status
+    }
+  } finally {
+    responseMiddleware(req, res);
+  }
+});
 
 export { router };
