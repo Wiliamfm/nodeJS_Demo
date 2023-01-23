@@ -53,6 +53,14 @@ class FighterService {
     return (health >= 80 && health <= 120) ? true : false;
   }
 
+  update(id, toUpdate) {
+    let f = fighterRepository.update(id, toUpdate);
+    if (!f || f === undefined) {
+      throw new setError(404, "Fighter not found");
+    }
+    return f;
+  }
+
   delete(id) {
     let a = fighterRepository.delete(id);
     return a.length === 0 ? false : a;

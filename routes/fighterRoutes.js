@@ -60,7 +60,22 @@ router.post("/", isAuthenticated, createFighterValid, (req, res) => {
   }
 });
 
-router.put("/:id");
+router.put("/:id", isAuthenticated, updateFighterValid, (req, res) => {
+  try {
+    let f = fighterService.update(req.params.id, req.body);
+    res.data = {
+      data: f,
+      status: 200
+    };
+  } catch (error) {
+    res.data = {
+      data: error.msg,
+      status: error.status
+    }
+  } finally {
+    responseMiddleware(req, res);
+  }
+});
 
 router.delete("/:id", isAuthenticated, (req, res) => {
   try {
