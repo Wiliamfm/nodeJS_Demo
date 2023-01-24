@@ -16,12 +16,14 @@ class FighterService {
   }
 
   create(fighter) {
-    fighter.name = fighter.name.toLocaleLowerCase()
+    //fighter.name = fighter.name.toLocaleLowerCase()
     return fighterRepository.create(fighter);
   }
 
   getByName(name) {
-    const f = fighterRepository.getOne({ name: name });
+    //const f = fighterRepository.getOne({ name: name });
+    const regex = new RegExp(name, "i");
+    const f = fighterRepository.getOne(fighter => regex.test(fighter.name));
     return f ? f : null;
   }
 
@@ -29,6 +31,7 @@ class FighterService {
     if (typeof (name) !== "string") {
       return false
     }
+    return this.getByName(name) ? false : true;
     return this.getByName(name.toLocaleLowerCase()) ? false : true;
   }
 
