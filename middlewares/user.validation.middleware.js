@@ -3,12 +3,12 @@ import { userService } from "../services/userService.js";
 
 const createUserValid = (req, res, next) => {
   let user = req.body
-  if (!userService.isValidUser(user)) {
-    return res.status(400).send("User data not valid");
-  }
   let missingFields = getExrtaOrMissingFields(Object.keys(user));
   if (missingFields.length > 0) {
     return res.status(400).send(`fields ${missingFields} are wrong`);
+  }
+  if (!userService.isValidUser(user)) {
+    return res.status(400).send("User data not valid");
   }
   next();
 };
